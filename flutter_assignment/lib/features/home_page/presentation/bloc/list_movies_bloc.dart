@@ -16,9 +16,10 @@ part 'list_movies_state.dart';
 class ListMoviesBloc extends Bloc<ListMoviesEvent, ListMoviesState> {
   /// Dependencies Inversion
   final CollectDataFromAPI collectDataFromAPI;
-  final CollectDataFromLocal collectDataFromLocal;
+  // final CollectDataFromLocal collectDataFromLocal;
 
-  ListMoviesBloc({required this.collectDataFromAPI, required this.collectDataFromLocal}) : super(ListMoviesInitial());
+  ListMoviesBloc({required this.collectDataFromAPI, //required this.collectDataFromLocal
+  }) : super(ListMoviesInitial());
 
   // TODO: implement initialState
   // ListMoviesState get initialState => Empty();

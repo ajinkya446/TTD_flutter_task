@@ -14,7 +14,13 @@ class Empty extends MovieListInitial {}
 class Loading extends MovieListInitial {}
 
 class Loaded extends MovieListInitial {
-  final dynamic response;
+  final StarWarMoviesModel response;
 
   Loaded(this.response);
+}
+
+class Error extends MovieListInitial {
+  final String message;
+
+  Error(this.message);
 }

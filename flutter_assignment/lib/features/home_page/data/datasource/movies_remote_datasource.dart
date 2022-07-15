@@ -8,7 +8,7 @@ abstract class MoviesRemoteDatasource {
   /// Calls the Local endpoint
   ///
   /// Throws [ServerExceptions] exception if error occurs
-  Future<StarWarMoviesModel> collectMoviesListFromLocal();
+  // Future<StarWarMoviesModel> collectMoviesListFromLocal();
 
   /// Calls the API endpoint
   ///

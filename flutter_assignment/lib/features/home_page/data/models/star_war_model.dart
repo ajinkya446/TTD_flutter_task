@@ -1,5 +1,7 @@
 import 'package:flutter_assignment/features/home_page/domain/entities/star_wars_movies_entity.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class StarWarMoviesModel extends StarWarMovieEntity {
   StarWarMoviesModel({required int count, dynamic next, dynamic previous, required result}) : super(count: count, next: next, previous: previous, results: result);
 

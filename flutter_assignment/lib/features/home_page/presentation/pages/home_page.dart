@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../commons/style.dart';
+import '../../domain/usecases/collectDataFromAPI.dart';
 import '../movie_list_cubit.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,8 +18,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late dynamic model;
+
   @override
   void initState() {
+    // model = getMoviesList();
+    // print(model);
     super.initState();
   }
 
@@ -27,6 +32,10 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement dispose
     super.dispose();
   }
+
+  // Future getMoviesList() async {
+  //   return await BlocProvider.of<MovieListCubit>(context).getMovies(Params(url: Constants.url));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -58,17 +67,19 @@ class _HomePageState extends State<HomePage> {
   BlocProvider<MovieListCubit> blockBody() {
     return BlocProvider(
         create: (_) => serviceLocator<MovieListCubit>()..getAPIResponse(),
-        child:
-        BlocBuilder<MovieListCubit, MovieListState>(
+        child: BlocBuilder<MovieListCubit, MovieListState>(
           builder: (BuildContext context, state) {
             return state == Empty()
                 ? Center(child: CircularProgressIndicator())
                 : state == Loading()
                     ? Center(child: Text("Fetching data please wait for while"))
-                    : Container();
+                    : state == Error("Error Occurred")
+                        ? Center(child: Text("Error Occurred"))
+                        : Container(
+                            // child: Text(model.count.toString() ?? "No Data"),
+                          );
           },
-        )
-    );
+        ));
   }
 }
 
