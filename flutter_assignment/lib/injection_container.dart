@@ -1,46 +1,40 @@
+import 'package:flutter_assignment/features/character_page/domain/repository/character_repository.dart';
+import 'package:flutter_assignment/features/character_page/domain/usecases/charactaer_list.dart';
+import 'package:flutter_assignment/features/character_page/presentation/cubit/character_list_cubit.dart';
 import 'package:flutter_assignment/features/home_page/data/datasource/movies_remote_datasource.dart';
 import 'package:flutter_assignment/features/home_page/data/repositories/star_war_repository_impl.dart';
 import 'package:flutter_assignment/features/home_page/domain/repositories/star_wars_repository.dart';
 import 'package:flutter_assignment/features/home_page/domain/usecases/collectDataFromAPI.dart';
-import 'package:flutter_assignment/features/home_page/presentation/movie_list_cubit.dart';
+import 'package:flutter_assignment/features/home_page/presentation/cubit/movie_list_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
+import 'features/character_page/data/datasource/character_remote_datasource.dart';
+import 'features/character_page/data/repositories/character_repository_impl.dart';
+
 final serviceLocator = GetIt.instance;
-// final getIt = GetIt.instance;
 
 Future<void> init() async {
-  /// Core Implementation
-
-  /// External object instantiation.
-  // final preferences = await SharedPreferences.getInstance();
-  // serviceLocator.registerFactory(() => preferences);
   serviceLocator.registerFactory(() => http.Client);
   serviceLocator.registerFactory(() => InternetConnectionChecker());
 
-  // Registering use cases.
   // Remote Data Source
   serviceLocator.registerLazySingleton<MoviesRemoteDatasource>(() => RemoteDataSourceImpl(client: http.Client()));
-  // Local Data Source
-  // serviceLocator.registerLazySingleton<MoviesLocalDatasource>(() => MovieLocalDatasourceImpl(sharedPreferences: serviceLocator<SharedPreferences>()));
-
-  // Network Info
-  // serviceLocator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(serviceLocator<InternetConnectionChecker>()));
 
   /// Registering repository
-  serviceLocator.registerLazySingleton<StarWarsRepository>(() => StarWarsRepositoryImpl(
-        remoteDatasource: serviceLocator<MoviesRemoteDatasource>(),
-        // localDatasource: serviceLocator<MoviesLocalDatasource>(),
-        // networkInfo: serviceLocator<NetworkInfo>(),
-      ));
+  serviceLocator.registerLazySingleton<StarWarsRepository>(() => StarWarsRepositoryImpl(remoteDatasource: serviceLocator<MoviesRemoteDatasource>()));
   serviceLocator.registerLazySingleton(() => CollectDataFromAPI(serviceLocator<StarWarsRepository>()));
-  // serviceLocator.registerLazySingleton(() => CollectDataFromLocal(serviceLocator<StarWarsRepository>()));
   serviceLocator.registerFactory(() => MovieListCubit(serviceLocator<CollectDataFromAPI>()));
-  // serviceLocator.registerFactory(() => ListMoviesBloc(collectDataFromAPI: serviceLocator<CollectDataFromAPI>(), collectDataFromLocal: serviceLocator<CollectDataFromLocal>()));
-}
 
-// @injectableInit()
-// Future configureInjection(String environment) async {
-//   $initGetIt(getIt, environment: environment); //call the service registration
-// }
+  /// Character loading and registering Dependencies
+
+  // Remote Data Source for characters list
+  serviceLocator.registerLazySingleton<CharactersRemoteDatasource>(() => CharacterSourceImpl(client: http.Client()));
+
+  serviceLocator.registerLazySingleton<CharactersRepository>(() => CharacterRepositoryImpl(remoteDatasource: serviceLocator<CharactersRemoteDatasource>()));
+
+  /// Registering repository
+  serviceLocator.registerLazySingleton(() => CharacterUseCase(serviceLocator<CharactersRepository>()));
+  serviceLocator.registerFactory(() => CharacterListCubit(serviceLocator<CharacterUseCase>()));
+}

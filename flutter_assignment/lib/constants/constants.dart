@@ -2,6 +2,7 @@ class Constants {
   static const String url = "https://swapi.dev/api/films/";
   static const String appName = "Star War";
   static const String movies = "Movies";
+  static const String characters = "Characters";
   static const String serverFailureMessage = "Error Occurred";
   static const String cacheFailureMessage = "No Cache Found";
   static const String collectMovieLocalTestLabel = 'Should  collect the movies data from Local';

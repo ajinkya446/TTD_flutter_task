@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_assignment/commons/size.dart';
 import 'package:flutter_assignment/constants/constants.dart';
-import 'package:flutter_assignment/features/home_page/presentation/bloc/list_movies_bloc.dart';
+import 'package:flutter_assignment/features/character_page/presentation/pages/character_screen.dart';
 import 'package:flutter_assignment/injection_container.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../commons/style.dart';
-import '../../domain/usecases/collectDataFromAPI.dart';
-import '../movie_list_cubit.dart';
+import '../cubit/movie_list_cubit.dart';
+import '../cubit/movie_list_state.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -61,46 +62,74 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        body: blockBody());
+        body: blockBody(size));
   }
 
-  BlocProvider<MovieListCubit> blockBody() {
+  BlocProvider<MovieListCubit> blockBody(Size size) {
     return BlocProvider(
         create: (_) => serviceLocator<MovieListCubit>()..getAPIResponse(),
-        child: BlocBuilder<MovieListCubit, MovieListState>(
+        child: BlocConsumer<MovieListCubit, MovieListState>(
+          listener: (ctx, pageState) {},
           builder: (BuildContext context, state) {
-            return state == Empty()
-                ? Center(child: CircularProgressIndicator())
-                : state == Loading()
-                    ? Center(child: Text("Fetching data please wait for while"))
-                    : state == Error("Error Occurred")
-                        ? Center(child: Text("Error Occurred"))
-                        : Container(
-                            // child: Text(model.count.toString() ?? "No Data"),
-                          );
+            return Container(
+              child: state.maybeWhen(() => null,
+                  orElse: () => Center(
+                        child: Text("Try again later",
+                            style: GoogleFonts.acme(
+                              textStyle: semiBoldTextStyle(textSize: TextSize.s16, color: Colors.white),
+                            )),
+                      ),
+                  Empty: () => const Center(child: CircularProgressIndicator()),
+                  Loaded: (response) => ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: response.results.length,
+                      itemBuilder: (listCtx, index) {
+                        return InkWell(
+                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (routeContext) => CharacterScreen(characters: response.results[index].characters))),
+                          child: Container(
+                            height: size.height * 0.13,
+                            width: size.width * 0.67,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: AppPadding.p16),
+                                  child: Image.asset("assets/images/image.png", height: size.height * 0.1),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: AppPadding.p12),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(response.results[index].title,
+                                          style: GoogleFonts.acme(
+                                            textStyle: semiBoldTextStyle(textSize: TextSize.s18, color: Colors.white),
+                                          )),
+                                      Text("Release Date- ${response.results[index].release_date}",
+                                          style: GoogleFonts.aBeeZee(
+                                            textStyle: semiBoldTextStyle(textSize: TextSize.s12, color: Colors.white),
+                                          )),
+                                      Text("Directed By- ${response.results[index].director}",
+                                          style: GoogleFonts.aBeeZee(
+                                            textStyle: semiBoldTextStyle(textSize: TextSize.s12, color: Colors.white),
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.favorite),
+                                  onPressed: () {},
+                                )
+                              ],
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: AppMargin.m16, vertical: 8),
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(AppMargin.m16), color: Colors.transparent.withOpacity(0.6)),
+                          ),
+                        );
+                      })),
+            );
           },
         ));
-  }
-}
-
-class LoadMoviesScreen extends StatefulWidget {
-  const LoadMoviesScreen({Key? key}) : super(key: key);
-
-  @override
-  _LoadMoviesScreenState createState() => _LoadMoviesScreenState();
-}
-
-class _LoadMoviesScreenState extends State<LoadMoviesScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(child: BlocBuilder<ListMoviesBloc, ListMoviesState>(
-      builder: (BuildContext context, state) {
-        return state == Empty()
-            ? Center(child: CircularProgressIndicator())
-            : state == Loading()
-                ? Center(child: Text("Fetching data please wait for while"))
-                : Container();
-      },
-    ));
   }
 }
