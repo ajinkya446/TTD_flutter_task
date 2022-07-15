@@ -4,11 +4,10 @@ import 'package:flutter_assignment/constants/constants.dart';
 import 'package:flutter_assignment/features/character_page/presentation/pages/character_screen.dart';
 import 'package:flutter_assignment/injection_container.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../commons/style.dart';
 import '../cubit/movie_list_cubit.dart';
 import '../cubit/movie_list_state.dart';
+import '../widgets/widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -42,15 +41,8 @@ class _HomePageState extends State<HomePage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-            Constants.movies,
-            style: GoogleFonts.acme(
-                textStyle: mediumTextStyle(
-              textSize: TextSize.s18,
-              weight: TextWeight.w400,
-              color: Colors.white,
-            )),
-          ),
+          centerTitle: true,
+          title: titleText(Constants.movies),
           actions: [
             IconButton(
               onPressed: () {},
@@ -73,12 +65,7 @@ class _HomePageState extends State<HomePage> {
           builder: (BuildContext context, state) {
             return Container(
               child: state.maybeWhen(() => null,
-                  orElse: () => Center(
-                        child: Text("Try again later",
-                            style: GoogleFonts.acme(
-                              textStyle: semiBoldTextStyle(textSize: TextSize.s16, color: Colors.white),
-                            )),
-                      ),
+                  orElse: () => Center(child: subtitleText(Constants.tryAgainLater, textSize: TextSize.s16)),
                   Empty: () => const Center(child: CircularProgressIndicator()),
                   Loaded: (response) => ListView.builder(
                       shrinkWrap: true,
@@ -91,10 +78,11 @@ class _HomePageState extends State<HomePage> {
                             width: size.width * 0.67,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(left: AppPadding.p16),
-                                  child: Image.asset("assets/images/image.png", height: size.height * 0.1),
+                                  child: Image.asset(Constants.noImageFound, height: size.height * 0.1),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(vertical: AppPadding.p12),
@@ -102,18 +90,9 @@ class _HomePageState extends State<HomePage> {
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(response.results[index].title,
-                                          style: GoogleFonts.acme(
-                                            textStyle: semiBoldTextStyle(textSize: TextSize.s18, color: Colors.white),
-                                          )),
-                                      Text("Release Date- ${response.results[index].release_date}",
-                                          style: GoogleFonts.aBeeZee(
-                                            textStyle: semiBoldTextStyle(textSize: TextSize.s12, color: Colors.white),
-                                          )),
-                                      Text("Directed By- ${response.results[index].director}",
-                                          style: GoogleFonts.aBeeZee(
-                                            textStyle: semiBoldTextStyle(textSize: TextSize.s12, color: Colors.white),
-                                          )),
+                                      subtitleText(response.results[index].title, textSize: TextSize.s18),
+                                      subtitleText("${Constants.releaseDate} ${response.results[index].release_date}", textSize: TextSize.s12),
+                                      subtitleText("${Constants.directedBy} ${response.results[index].director}", textSize: TextSize.s12)
                                     ],
                                   ),
                                 ),
