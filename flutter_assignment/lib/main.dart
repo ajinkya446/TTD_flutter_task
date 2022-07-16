@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_assignment/core/storage/star_war_database.dart';
 
 import 'app/my_App.dart';
 import 'injection_container.dart';
@@ -9,12 +10,17 @@ import 'injection_container.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// initializing the dependencies registered in init app.
-  // await di.serviceLocator.allReady();
+  /// Opening and creation of SQFLite- database
+  await StarWarDatabase().initDatabase();
+
+  // await db.insert(StarWarDatabase().tableNameMovies, {
+  //   "count": 6,
+  // });
+  //
+  // await db.insert(StarWarDatabase().tableNameResults, {"title": "A New Hope", "episode_id": 4, "opening_crawl": "It is a period of", "FK_result": "1"});
   await init();
   runApp(const MyApp());
 }
-
 
 // @immutable
 // abstract class Model with _$Model {
@@ -27,4 +33,3 @@ void main() async {
 //   factory Model.fromJson(Map<String, dynamic> json) => _$Model(json);
 //
 // }
-

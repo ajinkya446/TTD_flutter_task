@@ -26,6 +26,8 @@ dependencies:
   internet_connection_checker :
   google_fonts: ^3.0.1
   json_annotation:
+  sqflite: ^2.0.3
+  path_provider:
 
 
 dev_dependencies:
@@ -34,7 +36,7 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   mockito:
   injectable_generator:
-    # add build runner if not already added
+  # add build runner if not already added
   build_runner:
   json_serializable:
   freezed: ^2.0.5

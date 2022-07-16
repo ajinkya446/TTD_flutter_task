@@ -12,7 +12,10 @@ class StarWarMoviesModel with _$StarWarMoviesModel {
 
   factory StarWarMoviesModel.fromJson(Map<String, dynamic> json) => _$StarWarMoviesModelFromJson(json);
 
-// Map<String, dynamic> toJson() {
-//   return {'count': count, 'next': next, 'previous': previous, 'results': results};
-// }
+  @override
+  Map<String, dynamic> toJson() {
+    return {'count': count, 'results': results};
+  }
+// @override
+// Map<String, dynamic> toJson(int count,List<Results> results) => _$StarWarMoviesModel(this.count,this.results);
 }
