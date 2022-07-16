@@ -26,8 +26,8 @@ class RemoteDataSourceImpl implements MoviesRemoteDatasource {
     // TODO: implement collectMoviesListFromAPI
     StarWarMoviesModel? model;
     // Checking the API and collect the response by converting json
-    final response = await client.get(Uri.parse(url), headers: {'Content-type': 'application/json'});
     try {
+      final response = await client.get(Uri.parse(url), headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         model = StarWarMoviesModel.fromJson(json.decode(response.body));
         return Right(model);

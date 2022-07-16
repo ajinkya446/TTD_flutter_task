@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../commons/size.dart';
-import '../../../../commons/style.dart';
+import 'size.dart';
+import 'style.dart';
 
 /// This widget is the common widget for subtitle text
 Text subtitleText(String title, {double? textSize = TextSize.s12, Color color = Colors.white}) {
