@@ -13,6 +13,7 @@ dependencies:
   injectable: ^1.5.3
     # Bloc for state management
   flutter_bloc: ^8.0.1
+
     # Value equality
   equatable: ^2.0.3
     # Functional programming thingies
@@ -24,6 +25,10 @@ dependencies:
   shared_preferences:
   internet_connection_checker :
   google_fonts: ^3.0.1
+  json_annotation:
+  sqflite: ^2.0.3
+  path_provider:
+
 
 dev_dependencies:
   flutter_test:
@@ -31,8 +36,16 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   mockito:
   injectable_generator:
-    # add build runner if not already added
+  # add build runner if not already added
   build_runner:
+  json_serializable:
+  freezed: ^2.0.5
 flutter:
   uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/image.png
+    - assets/images/profile.jpeg
+    - assets/images/profile.jfif
 

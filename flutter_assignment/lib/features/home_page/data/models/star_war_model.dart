@@ -1,13 +1,21 @@
-import 'package:flutter_assignment/features/home_page/domain/entities/star_wars_movies_entity.dart';
-import 'package:injectable/injectable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-@injectable
-class StarWarMoviesModel extends StarWarMovieEntity {
-  StarWarMoviesModel({required int count, dynamic next, dynamic previous, required result}) : super(count: count, next: next, previous: previous, results: result);
+import 'movies_list/movies_list.dart';
 
-  factory StarWarMoviesModel.fromJson(Map<String, dynamic> json) => StarWarMoviesModel(count: json['count'], next: json['next'], previous: json['previous'], result: json['results']);
+part 'star_war_model.freezed.dart';
 
+part 'star_war_model.g.dart';
+
+@freezed
+class StarWarMoviesModel with _$StarWarMoviesModel {
+  const factory StarWarMoviesModel({required int count, required List<Results> results}) = _StarWarMoviesModel;
+
+  factory StarWarMoviesModel.fromJson(Map<String, dynamic> json) => _$StarWarMoviesModelFromJson(json);
+
+  @override
   Map<String, dynamic> toJson() {
-    return {'count': count, 'next': next, 'previous': previous, 'results': results};
+    return {'count': count, 'results': results};
   }
+// @override
+// Map<String, dynamic> toJson(int count,List<Results> results) => _$StarWarMoviesModel(this.count,this.results);
 }

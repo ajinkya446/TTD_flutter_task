@@ -4,30 +4,21 @@ import 'package:flutter_assignment/core/error/failure.dart';
 import 'package:flutter_assignment/features/home_page/domain/repositories/star_wars_repository.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../domain/entities/star_wars_movies_entity.dart';
 import '../datasource/movies_remote_datasource.dart';
 import '../models/star_war_model.dart';
 
-// typedef LoadDatasource = Future<StarWarMoviesModel> Function();
 @LazySingleton(as: StarWarsRepository)
 class StarWarsRepositoryImpl implements StarWarsRepository {
   final MoviesRemoteDatasource remoteDatasource;
 
-  // final MoviesLocalDatasource localDatasource;
-  // final NetworkInfo networkInfo;
-
-  StarWarsRepositoryImpl({
-    required this.remoteDatasource, // required this.localDatasource,
-    // required this.networkInfo
-  });
+  StarWarsRepositoryImpl({required this.remoteDatasource});
 
   @override
   Future<Either<Failure, StarWarMoviesModel>> collectMoviesListFromAPI(String url) async {
     // TODO: implement collectMoviesListFromAPI i.e fetching data from API
-    // return await _getDataSource(() => remoteDatasource.collectMoviesListFromAPI(url));
     try {
       final response = await remoteDatasource.collectMoviesListFromAPI(Constants.url);
-      return Right(response);
+      return response;
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
