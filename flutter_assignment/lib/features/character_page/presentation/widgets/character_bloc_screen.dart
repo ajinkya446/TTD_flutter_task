@@ -11,13 +11,14 @@ import '../cubit/character_list_state.dart';
 
 class CharacterBodyScreen extends StatelessWidget {
   final List<String> characters;
+  final int remoteId;
 
-  const CharacterBodyScreen({Key? key, required this.characters}) : super(key: key);
+  const CharacterBodyScreen({Key? key, required this.characters, required this.remoteId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => serviceLocator<CharacterListCubit>()..getCharacterDetails(characters),
+        create: (_) => serviceLocator<CharacterListCubit>()..getCharacterDetails(characters, this.remoteId),
         child: BlocConsumer<CharacterListCubit, CharacterListState>(
           listener: (ctx, pageState) {},
           builder: (BuildContext context, state) {

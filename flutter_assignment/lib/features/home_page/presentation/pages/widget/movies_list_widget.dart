@@ -23,11 +23,17 @@ class MoviesListWidget extends StatelessWidget {
               List<String> characters = [];
               if (response.results[index].characters.isEmpty) {
                 characters = await serviceLocator<MovieListCubit>().getCharacterResponse(index);
-                Navigator.push(context, MaterialPageRoute(builder: (routeContext) => CharacterScreen(characters: characters)));
               } else {
                 characters = response.results[index].characters;
               }
-              Navigator.push(context, MaterialPageRoute(builder: (routeContext) => CharacterScreen(characters: characters)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (routeContext) => CharacterScreen(
+                      characters: characters,
+                      remoteId: index + 1,
+                    ),
+                  ));
             },
             child: MovieInfoScreen(
               size: size,

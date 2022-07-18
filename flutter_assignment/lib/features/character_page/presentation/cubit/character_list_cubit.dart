@@ -8,8 +8,8 @@ class CharacterListCubit extends Cubit<CharacterListState> {
 
   CharacterListCubit(this._characterUseCase) : super(const CharacterListState.Init());
 
-  Future getCharacterDetails(List<String> characters) async {
-    final result = await _characterUseCase(Params(characters: characters));
+  Future getCharacterDetails(List<String> characters, int id) async {
+    final result = await _characterUseCase(Params(characters: characters, id: id));
     result.fold((_) => emit(const CharacterListState.Error()), (result) {
       if (result == null) {
         emit(const CharacterListState.Init());

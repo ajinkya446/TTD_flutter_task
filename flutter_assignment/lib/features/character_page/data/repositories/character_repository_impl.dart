@@ -14,10 +14,10 @@ class CharacterRepositoryImpl implements CharactersRepository {
   CharacterRepositoryImpl({required this.remoteDatasource});
 
   @override
-  Future<Either<Failure, List<CharacterModels>>> getAllCharacters(List<String> characters) async {
+  Future<Either<Failure, List<CharacterModels>>> getAllCharacters(List<String> characters,int id) async {
     // TODO: implement collectMoviesListFromAPI i.e fetching data from API
     try {
-      final response = await remoteDatasource.fetchCharacters(characters);
+      final response = await remoteDatasource.fetchCharacters(characters,id);
       return response;
     } catch (e) {
       return Left(ServerFailure(e.toString()));

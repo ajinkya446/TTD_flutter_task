@@ -4,5 +4,5 @@ import 'package:flutter_assignment/features/character_page/data/models/character
 
 abstract class CharactersRepository {
   /// Handling Functional error operation using Either while collecting the movies data from API
-  Future<Either<Failure, List<CharacterModels>>> getAllCharacters(List<String> characters);
+  Future<Either<Failure, List<CharacterModels>>> getAllCharacters(List<String> characters, int id);
 }

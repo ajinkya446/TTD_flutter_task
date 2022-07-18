@@ -6,8 +6,9 @@ import '../../../../constants/constants.dart';
 
 class CharacterScreen extends StatefulWidget {
   final List<String> characters;
+  final int remoteId;
 
-  const CharacterScreen({Key? key, required this.characters}) : super(key: key);
+  const CharacterScreen({Key? key, required this.characters, required this.remoteId}) : super(key: key);
 
   @override
   _CharacterScreenState createState() => _CharacterScreenState();
@@ -23,6 +24,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
       ),
       body: CharacterBodyScreen(
         characters: widget.characters,
+        remoteId: widget.remoteId,
       ),
     );
   }

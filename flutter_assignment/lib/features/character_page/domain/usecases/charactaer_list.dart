@@ -13,11 +13,12 @@ class CharacterUseCase implements UseCase<List<CharacterModels>, Params> {
   CharacterUseCase(this.repository);
 
   @override
-  Future<Either<Failure, List<CharacterModels>>> call(Params params) async => await repository.getAllCharacters(params.characters);
+  Future<Either<Failure, List<CharacterModels>>> call(Params params) async => await repository.getAllCharacters(params.characters, params.id);
 }
 
 class Params {
   final List<String> characters;
+  final int id;
 
-  Params({required this.characters});
+  Params({required this.characters, required this.id});
 }
