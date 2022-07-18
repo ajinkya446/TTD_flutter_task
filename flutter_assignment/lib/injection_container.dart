@@ -12,6 +12,8 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import 'features/character_page/data/datasource/character_remote_datasource.dart';
 import 'features/character_page/data/repositories/character_repository_impl.dart';
+import 'features/home_page/data/datasource/local_data_source.dart';
+import 'features/home_page/domain/usecases/collectDataFromLocal.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -22,10 +24,14 @@ Future<void> init() async {
   // Remote Data Source
   serviceLocator.registerLazySingleton<MoviesRemoteDatasource>(() => RemoteDataSourceImpl(client: http.Client()));
 
+  serviceLocator.registerLazySingleton<MoviesLocalDatasource>(() => LocalDatasourceImpl());
+
   /// Registering repository
-  serviceLocator.registerLazySingleton<StarWarsRepository>(() => StarWarsRepositoryImpl(remoteDatasource: serviceLocator<MoviesRemoteDatasource>()));
+  serviceLocator
+      .registerLazySingleton<StarWarsRepository>(() => StarWarsRepositoryImpl(remoteDatasource: serviceLocator<MoviesRemoteDatasource>(), localDatasource: serviceLocator<MoviesLocalDatasource>()));
   serviceLocator.registerLazySingleton(() => CollectDataFromAPI(serviceLocator<StarWarsRepository>()));
-  serviceLocator.registerFactory(() => MovieListCubit(serviceLocator<CollectDataFromAPI>()));
+  serviceLocator.registerLazySingleton(() => CollectDataFromLocal(serviceLocator<StarWarsRepository>()));
+  serviceLocator.registerFactory(() => MovieListCubit(serviceLocator<CollectDataFromAPI>(), serviceLocator<CollectDataFromLocal>()));
 
   /// Character loading and registering Dependencies
 
