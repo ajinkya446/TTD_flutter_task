@@ -22,6 +22,7 @@ class MoviesListWidget extends StatelessWidget {
             onTap: () async {
               List<String> characters = [];
               if (response.results[index].characters.isEmpty) {
+                DateTime(2022,6,18);
                 characters = await serviceLocator<MovieListCubit>().getCharacterResponse(index);
               } else {
                 characters = response.results[index].characters;

@@ -47,8 +47,6 @@ class _CharacterInfoState extends State<CharacterInfo> {
                         subtitleText("${Constants.actorWeight} ${widget.info.mass}", color: Colors.white, textSize: TextSize.s14),
                         const SizedBox(height: 20),
                         subtitleText("${Constants.actorSkinColor} ${widget.info.skin_color}", color: Colors.white, textSize: TextSize.s14),
-                        const SizedBox(height: 20),
-                        subtitleText("${Constants.actorTotalFilms} ${widget.info.films.length}", color: Colors.white, textSize: TextSize.s14),
                       ],
                     ),
                   ),

@@ -30,7 +30,7 @@ class RemoteDataSourceImpl implements MoviesRemoteDatasource {
     // Checking the API and collect the response by converting json
     try {
       List<Map> moviesResult = await StarWarDatabase.instance.getAllMovies();
-      if (moviesResult.isEmpty) {
+      if (moviesResult.isEmpty || moviesResult.length == 0) {
         final response = await client.get(Uri.parse(url), headers: {'Content-type': 'application/json'});
         if (response.statusCode == 200) {
           model = StarWarMoviesModel.fromJson(json.decode(response.body));
@@ -40,7 +40,7 @@ class RemoteDataSourceImpl implements MoviesRemoteDatasource {
           await StarWarDatabase.instance.insertDataResults(model);
           await StarWarDatabase.instance.insertDataCharacters(model);
 
-          if (result == 1) {
+          if (result >= 1) {
             return Right(model);
           } else {
             return Left(CacheFailure("Database Exception"));

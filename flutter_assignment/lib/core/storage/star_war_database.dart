@@ -25,18 +25,20 @@ class StarWarDatabase {
 
   Future<Database> get database async => _database ??= await initDatabase();
 
+  ///Initialization of the database object and table creation
   Future initDatabase() async {
     String dbPath = await getDatabasesPath();
     String path = dbPath + "/" + databaseName;
     try {
       return await openDatabase(path, onCreate: onCreate, version: 1);
     } catch (e) {
-      print(e);
+      throw Exception(e);
     }
   }
 
+  /// Creating tables and executes database actions onCreate
   Future<void> onCreate(Database db, int version) async {
-    await db.execute('CREATE TABLE $tableNameMovies(id INTEGER PRIMARY KEY AUTOINCREMENT, is_loaded STRING, count INTEGER )');
+    await db.execute('CREATE TABLE $tableNameMovies(id INTEGER PRIMARY KEY AUTOINCREMENT, create_date STRING, count INTEGER )');
     await db.execute('CREATE TABLE $tableNameCharacterAPI(capi_id INTEGER PRIMARY KEY AUTOINCREMENT, api STRING, FK_results INTEGER,'
         'FOREIGN KEY(FK_results) REFERENCES $tableNameResults(result_id))');
 
@@ -45,21 +47,10 @@ class StarWarDatabase {
         'birth_year STRING,gender STRING, homeworld STRING, created STRING,edited STRING,url STRING,'
         'FK_character_id INTEGER,'
         'FOREIGN KEY(FK_character_id) REFERENCES $tableNameResults(result_id))');
-
-    // await db.execute('CREATE TABLE $tableNamePlanetsAPI(papi_id INTEGER PRIMARY KEY AUTOINCREMENT, api STRING)');
-    // await db.execute('CREATE TABLE $tableNameVehicleAPI(vapi_id INTEGER PRIMARY KEY AUTOINCREMENT, api STRING)');
-    // await db.execute('CREATE TABLE $tableNameSpaciesAPI(sapi_id INTEGER PRIMARY KEY AUTOINCREMENT, api STRING)');
-    // await db.execute('CREATE TABLE $tableNameStarshipAPI(star_api_id INTEGER PRIMARY KEY AUTOINCREMENT, api STRING)');
     await db.execute('CREATE TABLE $tableNameResults(result_id INTEGER PRIMARY KEY AUTOINCREMENT, title STRING,episode_id INTEGER,opening_crawl INTEGER,'
-        // 'FK_spacies INTEGER,FK_starship INTEGER,FK_vehicle INTEGER,FK_planets INTEGER,'
         'director STRING, producer STRING,release_date STRING,created STRING,edited STRING,url STRING,FK_result INTEGER, FK_character INTEGER,'
         ' FOREIGN KEY(FK_result) REFERENCES $tableNameMovies(id)'
-        ' FOREIGN KEY(FK_character) REFERENCES $tableNameSpaciesAPI(capi_id))'
-        // ' FOREIGN KEY(FK_spacies) REFERENCES $tableNameSpaciesAPI(sapi_id),'
-        // ' FOREIGN KEY(FK_starship) REFERENCES $tableNameStarshipAPI(star_api_id),'
-        // ' FOREIGN KEY(FK_vehicle) REFERENCES $tableNameVehicleAPI(vapi_id),'
-        // ' FOREIGN KEY(FK_planets) REFERENCES $tableNamePlanetsAPI(papi_id))'
-        );
+        ' FOREIGN KEY(FK_character) REFERENCES $tableNameSpaciesAPI(capi_id))');
   }
 
   /// Check movies details exists in table or not.
@@ -70,8 +61,33 @@ class StarWarDatabase {
 
   /// Check if any data present inside the table Movies
   Future getAllMovies() async {
-    final result = await _database!.query(tableNameMovies);
-    return result;
+    List<Map> result = await _database!.query(tableNameMovies);
+    if (result.isNotEmpty) {
+      for (var data in result) {
+        String dateTimeNew = data["create_date"].toString();
+        DateTime dateTime = DateTime.parse(dateTimeNew);
+        Duration dur = DateTime.now().difference(dateTime);
+        String diffInMonth = (dur.inDays / 30).floor().toString();
+        print(diffInMonth);
+        if (int.parse(diffInMonth) == 1) {
+          try {
+            await _database!.delete(tableNameMovies);
+            await _database!.delete(tableNameResults);
+            await _database!.delete(tableNameCharacterAPI);
+            await _database!.delete(tableNameCharacterInfo);
+            final value = await _database!.query(tableNameMovies);
+            return value;
+          } catch (error) {
+            throw Exception('DbBase.cleanDatabase: ' + error.toString());
+          }
+        } else {
+          final value = await _database!.query(tableNameMovies);
+          return value;
+        }
+      }
+    } else {
+      return result;
+    }
   }
 
   /// Check if any data present inside the table Results
@@ -101,7 +117,7 @@ class StarWarDatabase {
   /// Insert data to table Movies
   Future insertDataToMovies(StarWarMoviesModel model) async {
     return await _database!.insert(tableNameMovies, {
-      "is_loaded": "true",
+      "create_date": DateTime.now().toString(),
       "count": model.count,
     });
   }
