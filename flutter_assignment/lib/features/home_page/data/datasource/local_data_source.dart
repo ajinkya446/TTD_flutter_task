@@ -11,7 +11,7 @@ class LocalDatasourceImpl implements MoviesLocalDatasource {
   Future<List<String>> getCharacters(int resultId) async {
     List<String> characters = [];
     try {
-      List<Map> resultsCharacters = await StarWarDatabase.instance.getAllCharacters(resultId);
+      List<Map> resultsCharacters = await DatabaseHelper.instance.getAllCharacters(resultId);
       for (var resultRow in resultsCharacters) {
         characters.add(resultRow["api"]);
       }

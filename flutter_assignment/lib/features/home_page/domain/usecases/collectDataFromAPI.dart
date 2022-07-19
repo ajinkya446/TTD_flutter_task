@@ -5,19 +5,19 @@ import 'package:flutter_assignment/features/home_page/data/models/star_war_model
 import 'package:flutter_assignment/features/home_page/domain/repositories/star_wars_repository.dart';
 import 'package:injectable/injectable.dart';
 
-// @injectable
 @LazySingleton()
-class CollectDataFromAPI implements UseCase<StarWarMoviesModel, Params> {
+class CollectDataFromAPI implements UseCase<StarWarMoviesModel, MovieListParams> {
   final StarWarsRepository starWarsRepository;
 
   CollectDataFromAPI(this.starWarsRepository);
 
   @override
-  Future<Either<Failure, StarWarMoviesModel>> call(Params params) async => await starWarsRepository.collectMoviesListFromAPI(params.url);
+  Future<Either<Failure, StarWarMoviesModel>> call(MovieListParams params) async => await starWarsRepository.collectMoviesListFromAPI(params.url);
 }
 
-class Params {
+/// This class collects the parameter as URL to fetch data from online
+class MovieListParams {
   final String url;
 
-  Params({required this.url});
+  MovieListParams({required this.url});
 }

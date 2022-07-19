@@ -42,4 +42,15 @@ class Constants {
   static const String getMovieDetailTest = 'Get Movies Json Details';
   static const String shouldCheckMovieTest = 'Should check movie list';
   static const String emitLoadingTest = 'Should Emit[Loading,Loaded] when data fully loaded';
+
+  /// Database Constants
+  static const String databaseName = 'star_war.db';
+  static const String tableNameMovies = 'MovieDetails';
+  static const String tableNameResults = 'Results';
+  static const String tableNameCharacterAPI = 'CharacterAPI';
+  static const String tableNameVehicleAPI = 'VehicleAPI';
+  static const String tableNamePlanetsAPI = 'PlanetsAPI';
+  static const String tableNameSpaciesAPI = 'SpaciesAPI';
+  static const String tableNameStarshipAPI = 'StarshipAPI';
+  static const String tableNameCharacterInfo = 'CharacterInfo';
 }

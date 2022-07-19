@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
             ),
             IconButton(
               onPressed: () {},
-              icon: const Icon(Icons.format_line_spacing_rounded),
+              icon: const Icon(Icons.format_line_spacing_rounded)
             ),
           ],
         ),

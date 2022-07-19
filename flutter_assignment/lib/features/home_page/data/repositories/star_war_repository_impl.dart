@@ -15,6 +15,7 @@ class StarWarsRepositoryImpl implements StarWarsRepository {
 
   StarWarsRepositoryImpl({required this.remoteDatasource, required this.localDatasource});
 
+  /// Collecting the Movies list response from the API
   @override
   Future<Either<Failure, StarWarMoviesModel>> collectMoviesListFromAPI(String url) async {
     try {
@@ -25,6 +26,7 @@ class StarWarsRepositoryImpl implements StarWarsRepository {
     }
   }
 
+  /// Getting all character information from the local database
   @override
   Future<List<String>> getAllCharacters(int remoteId) async {
     try {
