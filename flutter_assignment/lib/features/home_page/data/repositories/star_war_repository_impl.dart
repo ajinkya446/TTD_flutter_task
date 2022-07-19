@@ -4,18 +4,19 @@ import 'package:flutter_assignment/core/error/failure.dart';
 import 'package:flutter_assignment/features/home_page/domain/repositories/star_wars_repository.dart';
 import 'package:injectable/injectable.dart';
 
+import '../datasource/local_data_source.dart';
 import '../datasource/movies_remote_datasource.dart';
 import '../models/star_war_model.dart';
 
 @LazySingleton(as: StarWarsRepository)
 class StarWarsRepositoryImpl implements StarWarsRepository {
   final MoviesRemoteDatasource remoteDatasource;
+  final MoviesLocalDatasource localDatasource;
 
-  StarWarsRepositoryImpl({required this.remoteDatasource});
+  StarWarsRepositoryImpl({required this.remoteDatasource, required this.localDatasource});
 
   @override
   Future<Either<Failure, StarWarMoviesModel>> collectMoviesListFromAPI(String url) async {
-    // TODO: implement collectMoviesListFromAPI i.e fetching data from API
     try {
       final response = await remoteDatasource.collectMoviesListFromAPI(Constants.url);
       return response;
@@ -24,28 +25,13 @@ class StarWarsRepositoryImpl implements StarWarsRepository {
     }
   }
 
-// @override
-// Future<Either<Failure, StarWarMoviesModel>> collectMoviesListFromLocal() async {
-//   // TODO: implement collectMoviesListFromLocal i.e from local database(SQFLite)
-//   return await _getDataSource(() => remoteDatasource.collectMoviesListFromLocal());
-// }
-
-// Future<Either<Failure, StarWarMoviesModel>> _getDataSource(LoadDatasource call) async {
-//   if (await networkInfo.isConnected) {
-//     try {
-//       final remoteData = await call();
-//       localDatasource.cacheMoviesList(remoteData);
-//       return Right(remoteData);
-//     } on ServerExceptions {
-//       return Left(ServerFailure(Constants.serverFailureMessage));
-//     }
-//   } else {
-//     try {
-//       final localData = await localDatasource.getMoviesFromLocal();
-//       return Right(localData);
-//     } on CacheExceptions {
-//       return Left(CacheFailure(Constants.cacheFailureMessage));
-//     }
-//   }
-// }
+  @override
+  Future<List<String>> getAllCharacters(int remoteId) async {
+    try {
+      final response = await localDatasource.getCharacters(remoteId);
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
 }

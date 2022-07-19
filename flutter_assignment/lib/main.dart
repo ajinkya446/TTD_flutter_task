@@ -11,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   /// Opening and creation of SQFLite- database
-  await StarWarDatabase().initDatabase();
+  await StarWarDatabase.instance.database;
 
   // await db.insert(StarWarDatabase().tableNameMovies, {
   //   "count": 6,
