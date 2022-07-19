@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'movies_list/movies_list.dart';
 
 part 'star_war_model.freezed.dart';
-
 part 'star_war_model.g.dart';
 
 @freezed
@@ -16,6 +15,4 @@ class StarWarMoviesModel with _$StarWarMoviesModel {
   Map<String, dynamic> toJson() {
     return {'count': count, 'results': results};
   }
-// @override
-// Map<String, dynamic> toJson(int count,List<Results> results) => _$StarWarMoviesModel(this.count,this.results);
 }

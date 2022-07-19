@@ -164,11 +164,12 @@ abstract class _StarWarMoviesModel implements StarWarMoviesModel {
       _$_StarWarMoviesModel.fromJson;
 
   @override
-  int get count;
+  int get count => throw _privateConstructorUsedError;
+
   @override
-  List<Results> get results;
+  List<Results> get results => throw _privateConstructorUsedError;
+
   @override
   @JsonKey(ignore: true)
-  _$$_StarWarMoviesModelCopyWith<_$_StarWarMoviesModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_StarWarMoviesModelCopyWith<_$_StarWarMoviesModel> get copyWith => throw _privateConstructorUsedError;
 }

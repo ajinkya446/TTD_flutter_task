@@ -15,10 +15,14 @@ class APIServices {
   /// Fetching Characters API response from server.
   Future<CharacterModels> fetchAPIResponse(String url, int id) async {
     CharacterModels? model;
-    final response = await client.get(Uri.parse(url), headers: {'Content-type': 'application/json'});
-    if (response.statusCode == 200) {
-      model = CharacterModels.fromJson(json.decode(response.body));
-      await DatabaseHelper.instance.insertDataToCharacterInfo(CharacterModels.fromJson(json.decode(response.body)), id);
+    try {
+      final response = await client.get(Uri.parse(url), headers: {'Content-type': 'application/json'});
+      if (response.statusCode == 200) {
+        model = CharacterModels.fromJson(json.decode(response.body));
+        await DatabaseHelper.instance.insertDataToCharacterInfo(CharacterModels.fromJson(json.decode(response.body)), id);
+      }
+    } catch (e) {
+      throw Exception();
     }
     return model!;
   }
@@ -26,20 +30,24 @@ class APIServices {
   ///Fetching Movies list Response from the server
   Future<Either<Failure, StarWarMoviesModel>> fetchAllMovies(String url) async {
     final response = await client.get(Uri.parse(url), headers: {'Content-type': 'application/json'});
-    if (response.statusCode == 200) {
-      StarWarMoviesModel model = StarWarMoviesModel.fromJson(json.decode(response.body));
+    try {
+      if (response.statusCode == 200) {
+        StarWarMoviesModel model = StarWarMoviesModel.fromJson(json.decode(response.body));
 
-      /// Inserting data to local database tables
-      var result = await DatabaseHelper.instance.insertDataToMovies(model);
-      await DatabaseHelper.instance.insertDataResults(model);
-      await DatabaseHelper.instance.insertDataCharacters(model);
+        /// Inserting data to local database tables
+        var result = await DatabaseHelper.instance.insertDataToMovies(model);
+        await DatabaseHelper.instance.insertDataResults(model);
+        await DatabaseHelper.instance.insertDataCharacters(model);
 
-      if (result >= 1) {
-        return Right(model);
+        if (result >= 1) {
+          return Right(model);
+        } else {
+          return Left(CacheFailure("Database Exception"));
+        }
       } else {
-        return Left(CacheFailure("Database Exception"));
+        return Left(ServerFailure(Constants.serverFailureMessage));
       }
-    } else {
+    } catch (e) {
       return Left(ServerFailure(Constants.serverFailureMessage));
     }
   }

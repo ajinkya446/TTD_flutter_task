@@ -419,35 +419,48 @@ abstract class _Results implements Results {
   factory _Results.fromJson(Map<String, dynamic> json) = _$_Results.fromJson;
 
   @override
-  String get title;
+  String get title => throw _privateConstructorUsedError;
+
   @override
-  int get episode_id;
+  int get episode_id => throw _privateConstructorUsedError;
+
   @override
-  String get opening_crawl;
+  String get opening_crawl => throw _privateConstructorUsedError;
+
   @override
-  String get director;
+  String get director => throw _privateConstructorUsedError;
+
   @override
-  String get producer;
+  String get producer => throw _privateConstructorUsedError;
+
   @override
-  String get release_date;
+  String get release_date => throw _privateConstructorUsedError;
+
   @override
-  List<String> get characters;
+  List<String> get characters => throw _privateConstructorUsedError;
+
   @override
-  List<String> get planets;
+  List<String> get planets => throw _privateConstructorUsedError;
+
   @override
-  List<String> get starships;
+  List<String> get starships => throw _privateConstructorUsedError;
+
   @override
-  List<String> get vehicles;
+  List<String> get vehicles => throw _privateConstructorUsedError;
+
   @override
-  List<String> get species;
+  List<String> get species => throw _privateConstructorUsedError;
+
   @override
-  String get created;
+  String get created => throw _privateConstructorUsedError;
+
   @override
-  String get edited;
+  String get edited => throw _privateConstructorUsedError;
+
   @override
-  String get url;
+  String get url => throw _privateConstructorUsedError;
+
   @override
   @JsonKey(ignore: true)
-  _$$_ResultsCopyWith<_$_Results> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_ResultsCopyWith<_$_Results> get copyWith => throw _privateConstructorUsedError;
 }
