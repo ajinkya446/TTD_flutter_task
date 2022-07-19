@@ -28,7 +28,7 @@ class HomePageBody extends StatelessWidget {
                     orElse: () => Center(
                         child: TextButton(
                             onPressed: () async {
-                              final response = await CollectDataFromAPI(serviceLocator<StarWarsRepository>()).call(Params(url: Constants.url));
+                              final response = await CollectDataFromAPI(serviceLocator<StarWarsRepository>()).call(MovieListParams(url: Constants.url));
                               print(response);
                             },
                             child: subtitleText(Constants.tryAgainLater, textSize: TextSize.s16))),

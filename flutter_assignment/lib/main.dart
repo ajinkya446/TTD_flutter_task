@@ -11,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   /// Opening and creation of SQFLite- database
-  await StarWarDatabase.instance.database;
+  await DatabaseHelper.instance.database;
   await init();
   runApp(const MyApp());
 }

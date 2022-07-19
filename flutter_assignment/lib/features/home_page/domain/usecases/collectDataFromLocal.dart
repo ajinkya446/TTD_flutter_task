@@ -1,7 +1,6 @@
 import 'package:flutter_assignment/core/usecase/usecase.dart';
 import 'package:flutter_assignment/features/home_page/domain/repositories/star_wars_repository.dart';
 
-// @injectable
 class CollectDataFromLocal implements LocalUsecase<List<String>, LocalParams> {
   final StarWarsRepository starWarsRepository;
 
@@ -13,6 +12,7 @@ class CollectDataFromLocal implements LocalUsecase<List<String>, LocalParams> {
   }
 }
 
+/// This class collects parameters for fetching data offline
 class LocalParams {
   int remoteId;
 
