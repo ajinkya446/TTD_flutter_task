@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_assignment/features/home_page/domain/repositories/star_wars_repository.dart';
+import 'package:flutter_assignment/features/home_page/domain/usecases/collectDataFromAPI.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../commons/widgets/size.dart';
@@ -12,7 +14,7 @@ import 'movies_list_widget.dart';
 class HomePageBody extends StatelessWidget {
   final Size size;
 
-  const HomePageBody({Key? key,required this.size}) : super(key: key);
+  const HomePageBody({Key? key, required this.size}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,13 @@ class HomePageBody extends StatelessWidget {
           builder: (BuildContext context, state) {
             return Container(
                 child: state.maybeWhen(() => null,
-                    orElse: () => Center(child: subtitleText(Constants.tryAgainLater, textSize: TextSize.s16)),
+                    orElse: () => Center(
+                        child: TextButton(
+                            onPressed: () async {
+                              final response = await CollectDataFromAPI(serviceLocator<StarWarsRepository>()).call(Params(url: Constants.url));
+                              print(response);
+                            },
+                            child: subtitleText(Constants.tryAgainLater, textSize: TextSize.s16))),
                     Empty: () => const Center(child: CircularProgressIndicator()),
                     Loaded: (response) => MoviesListWidget(size: size, response: response)));
           },

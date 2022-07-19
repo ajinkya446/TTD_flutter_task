@@ -64,10 +64,10 @@ class CharacterSourceImpl implements CharactersRemoteDatasource {
         if (model.isNotEmpty) {
           return Right(model);
         } else {
-          return Left(CacheFailure("Error Occurred"));
+          return Left(CacheFailure(Constants.cacheFailureMessage));
         }
       } catch (e) {
-        return Left(CacheFailure("Error Occurred"));
+        return Left(CacheFailure(Constants.cacheFailureMessage));
       }
     }
   }
