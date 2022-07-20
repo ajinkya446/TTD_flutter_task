@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import '../../../constants/constants.dart';
 import '../../../features/character_page/data/models/character_model.dart';
 import '../../../features/home_page/data/models/star_war_model.dart';
+import '../../error/exceptions.dart';
 import '../../error/failure.dart';
 import '../../storage/star_war_database.dart';
 
@@ -22,7 +23,7 @@ class APIServices {
         await DatabaseHelper.instance.insertDataToCharacterInfo(CharacterModels.fromJson(json.decode(response.body)), id);
       }
     } catch (e) {
-      throw Exception();
+      throw ServerExceptions(Constants.serverFailureMessage);
     }
     return model!;
   }
@@ -45,7 +46,7 @@ class APIServices {
           return Left(CacheFailure("Database Exception"));
         }
       } else {
-        return Left(ServerFailure(Constants.serverFailureMessage));
+        throw ServerExceptions(Constants.serverFailureMessage);
       }
     } catch (e) {
       return Left(ServerFailure(Constants.serverFailureMessage));

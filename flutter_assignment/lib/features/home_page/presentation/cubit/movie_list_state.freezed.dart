@@ -672,7 +672,7 @@ abstract class _MovieListStateListReceived implements MovieListState {
       _$_MovieListStateListReceived.fromJson;
 
   StarWarMoviesModel get response => throw _privateConstructorUsedError;
-
   @JsonKey(ignore: true)
-  _$$_MovieListStateListReceivedCopyWith<_$_MovieListStateListReceived> get copyWith => throw _privateConstructorUsedError;
+  _$$_MovieListStateListReceivedCopyWith<_$_MovieListStateListReceived>
+      get copyWith => throw _privateConstructorUsedError;
 }

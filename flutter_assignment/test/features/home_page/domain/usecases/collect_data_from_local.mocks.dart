@@ -4,8 +4,10 @@
 
 import 'dart:async' as _i4;
 
-import 'package:flutter_assignment/features/home_page/domain/repositories/star_wars_repository.dart' as _i2;
-import 'package:flutter_assignment/features/home_page/domain/usecases/collectDataFromLocal.dart' as _i3;
+import 'package:flutter_assignment/features/home_page/domain/repositories/star_wars_repository.dart'
+    as _i2;
+import 'package:flutter_assignment/features/home_page/domain/usecases/collectDataFromLocal.dart'
+    as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -18,19 +20,25 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: camel_case_types
 
-class _FakeStarWarsRepository_0 extends _i1.Fake implements _i2.StarWarsRepository {}
+class _FakeStarWarsRepository_0 extends _i1.Fake
+    implements _i2.StarWarsRepository {}
 
 /// A class which mocks [CollectDataFromLocal].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockCollectMovieFromLocal extends _i1.Mock implements _i3.CollectDataFromLocal {
+class MockCollectMovieFromLocal extends _i1.Mock
+    implements _i3.CollectDataFromLocal {
   MockCollectMovieFromLocal() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.StarWarsRepository get starWarsRepository => (super.noSuchMethod(Invocation.getter(#starWarsRepository), returnValue: _FakeStarWarsRepository_0()) as _i2.StarWarsRepository);
-
+  _i2.StarWarsRepository get starWarsRepository =>
+      (super.noSuchMethod(Invocation.getter(#starWarsRepository),
+          returnValue: _FakeStarWarsRepository_0()) as _i2.StarWarsRepository);
   @override
-  _i4.Future<List<String>> call(_i3.LocalParams? params) => (super.noSuchMethod(Invocation.method(#call, [params]), returnValue: Future<List<String>>.value(<String>[])) as _i4.Future<List<String>>);
+  _i4.Future<List<String>> call(_i3.LocalParams? params) =>
+      (super.noSuchMethod(Invocation.method(#call, [params]),
+              returnValue: Future<List<String>>.value(<String>[]))
+          as _i4.Future<List<String>>);
 }

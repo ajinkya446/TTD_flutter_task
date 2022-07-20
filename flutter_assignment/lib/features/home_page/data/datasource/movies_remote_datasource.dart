@@ -48,7 +48,7 @@ class RemoteDataSourceImpl implements MoviesRemoteDatasource {
         return Right(dbModel);
       }
     } catch (e) {
-      return Left(ServerFailure(Constants.serverFailureMessage));
+      throw ServerExceptions(Constants.serverFailureMessage);
     }
   }
 }

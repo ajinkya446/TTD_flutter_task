@@ -12,7 +12,7 @@ void main() {
     expect(tStarWarModel, isA<StarWarMoviesModel>());
   });
 
-  group('from JSON', () {
+  group('from JSON & to JSON', () {
     test('collect json data', () async {
       final Map<String, dynamic> jsonMap = json.decode(fixture('movies.json'));
       final result = StarWarMoviesModel.fromJson(jsonMap);
