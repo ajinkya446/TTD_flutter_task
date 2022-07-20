@@ -39,6 +39,7 @@ dev_dependencies:
   # add build runner if not already added
   build_runner: ^2.0.5
   json_serializable: ^6.1.4
+  bloc_test: ^9.0.2
 
 flutter:
   uses-material-design: true

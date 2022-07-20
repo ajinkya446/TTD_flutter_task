@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_assignment/constants/constants.dart';
 import 'package:flutter_assignment/features/home_page/data/models/star_war_model.dart';
@@ -14,55 +15,53 @@ import 'package:mockito/mockito.dart';
 import '../../../../fixtures/fixtures.dart';
 import 'home_page_cubit_test.mocks.dart';
 
-@GenerateMocks([], customMocks: [MockSpec<CollectDataFromAPI>(as: #MockMoviesListRemoteData), MockSpec<CollectDataFromLocal>(as: #MockMoviesListLocalData)])
+@GenerateMocks([], customMocks: [
+  MockSpec<CollectDataFromAPI>(as: #MockMoviesRemoteData, returnNullOnMissingStub: true),
+  MockSpec<CollectDataFromLocal>(as: #MockMoviesLocalData),
+  MockSpec<MovieListParams>(as: #MockParams, returnNullOnMissingStub: true)
+])
 void main() {
-  late MovieListCubit movieListCubit;
-  late MockMoviesListRemoteData mockMoviesListRemoteData;
-  late MockMoviesListLocalData mockMoviesListLocalData;
+  late MovieListCubit cubit;
+  late MockMoviesRemoteData mockMoviesListRemoteData;
+  late MockMoviesLocalData mockMoviesListLocalData;
+  late MockParams mockParams;
 
   StarWarMoviesModel modelData = StarWarMoviesModel.fromJson(json.decode(fixture('movies.json')));
   setUp(() {
-    mockMoviesListRemoteData = MockMoviesListRemoteData();
-    mockMoviesListLocalData = MockMoviesListLocalData();
-    movieListCubit = MovieListCubit(mockMoviesListRemoteData, mockMoviesListLocalData);
+    mockMoviesListRemoteData = MockMoviesRemoteData();
+    mockMoviesListLocalData = MockMoviesLocalData();
+    cubit = MovieListCubit(mockMoviesListRemoteData, mockMoviesListLocalData);
+    mockParams = MockParams();
   });
 
-  test('description Widget', () async {});
+  group('Cubit Widget Test', () {
 
-  test('Loading state', () async {
-    when(mockMoviesListRemoteData(MovieListParams(url: Constants.url))).thenAnswer((_) async => Future.value(Right(json.decode(fixture('movies.json')))));
-    final expected = [MovieListState.Empty(), MovieListState.Loaded(modelData), const MovieListState.Error()];
-    expectLater(movieListCubit.state, emitsInOrder(expected));
-    movieListCubit.getAPIResponse();
+    // Cubit data loading test
+    blocTest<MovieListCubit, MovieListState>(
+      'emits [MoviesListState Loading] when successful',
+      build: () => cubit,
+      act: (MovieListCubit newCubit) async {
+        when(mockMoviesListRemoteData.call(MovieListParams(url: Constants.url))).thenAnswer((_) async => Right(modelData));
+        await newCubit.getAPIResponse();
+        verify(mockMoviesListRemoteData.call(mockParams));
+      },
+      expect: () => [MovieListState.Empty(), MovieListState.Loaded(modelData)],
+    );
+
+    // // Cubit data Empty test
+    // blocTest<MovieListCubit, MovieListState>(
+    //   'emits [MoviesListState Empty] when No data',
+    //   build: () => MovieListCubit(MockCollectMovieFromAPI(), MockCollectMovieFromLocal()),
+    //   act: (newCubit) => newCubit.emit(MovieListState.Empty()),
+    //   expect: () => <MovieListState>[MovieListState.Empty()],
+    // );
+    //
+    // // Cubit data Empty test
+    // blocTest<MovieListCubit, MovieListState>(
+    //   'emits [MoviesListState Error] when Error Occurred',
+    //   build: () => MovieListCubit(MockCollectMovieFromAPI(), MockCollectMovieFromLocal()),
+    //   act: (newCubit) => newCubit.emit(MovieListState.Error()),
+    //   expect: () => <MovieListState>[MovieListState.Error()],
+    // );
   });
-
-  // group(Constants.getMovieDetailTest, () {
-  //   final movieJson = StarWarMoviesModel(count: 6, result: [
-  //     {"Welcome": "Ajinkya"}
-  //   ]);
-  //   test(Constants.shouldCheckMovieTest, () async {
-  //     listMoviesBloc.mapEventToState(GetMovie(starWarMoviesModel: movieJson));
-  //   });
-  //
-  //   // test('Should emit [Error] when data is invalid', () {
-  //   //   when(listMoviesBloc.mapEventToState(GetMovie(StarWarMoviesModel(count: 0, result: [])))).thenThrow(ServerFailure(Constants.serverFailureMessage));
-  //   //   final expectData = [Empty(), Error(message: "No Movies Found")];
-  //   //   listMoviesBloc.dispatch(GetMovie(StarWarMoviesModel(count: 0, result: [])));
-  //   //   expectLater(listMoviesBloc.state, throwsA(TypeMatcher<ServerFailure>()));
-  //   // });
-  //
-  //   test(Constants.emitLoadingTest, () async* {
-  //     when(mockMoviesListRemoteData(Params(url: Constants.url))).thenAnswer((_) async => Future.value(Right(movieJson)));
-  //     final expected = [Empty(), Loading(), Loaded(model: movieJson)];
-  //     expectLater(listMoviesBloc.state, emitsInOrder(expected));
-  //     listMoviesBloc.mapEventToState(GetMovie(starWarMoviesModel: movieJson));
-  //   });
-  //
-  //   // test('Should Emit[Loading,Error] when data not loaded', () async {
-  //   //   when(mockMoviesListRemoteData(Params(url: Constants.url))).thenAnswer((_) async => Left(ServerFailure(Constants.serverFailureMessage)));
-  //   //   final expected = [Empty(), Loading(), Error(message: Constants.serverFailureMessage)];
-  //   //   expectLater(listMoviesBloc.state, emitsInOrder(expected));
-  //   //   listMoviesBloc.dispatch(GetMovie(movieJson));
-  //   // });
-  // });
 }

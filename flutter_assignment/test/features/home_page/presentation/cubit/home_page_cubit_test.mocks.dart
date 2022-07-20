@@ -34,12 +34,7 @@ class _FakeEither_1<L, R> extends _i1.Fake implements _i3.Either<L, R> {}
 /// A class which mocks [CollectDataFromAPI].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockMoviesListRemoteData extends _i1.Mock
-    implements _i4.CollectDataFromAPI {
-  MockMoviesListRemoteData() {
-    _i1.throwOnMissingStub(this);
-  }
-
+class MockMoviesRemoteData extends _i1.Mock implements _i4.CollectDataFromAPI {
   @override
   _i2.StarWarsRepository get starWarsRepository =>
       (super.noSuchMethod(Invocation.getter(#starWarsRepository),
@@ -57,9 +52,8 @@ class MockMoviesListRemoteData extends _i1.Mock
 /// A class which mocks [CollectDataFromLocal].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockMoviesListLocalData extends _i1.Mock
-    implements _i8.CollectDataFromLocal {
-  MockMoviesListLocalData() {
+class MockMoviesLocalData extends _i1.Mock implements _i8.CollectDataFromLocal {
+  MockMoviesLocalData() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -72,4 +66,13 @@ class MockMoviesListLocalData extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#call, [params]),
               returnValue: Future<List<String>>.value(<String>[]))
           as _i5.Future<List<String>>);
+}
+
+/// A class which mocks [MovieListParams].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockParams extends _i1.Mock implements _i4.MovieListParams {
+  @override
+  String get url =>
+      (super.noSuchMethod(Invocation.getter(#url), returnValue: '') as String);
 }
