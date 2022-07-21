@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_assignment/features/home_page/data/models/movies_list/movies_list.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../../../constants/test_constants.dart';
 import '../../../../../fixtures/fixtures.dart';
 
 void main() {
@@ -12,11 +13,11 @@ void main() {
     tResults.add(Results.fromJson(jsonData["result"][i]));
   }
 
-  test('should be sub class of Movie List entity', () async {
+  test(TestConstants.testMoviesModel, () async {
     expect(tResults, isA<List<Results>>());
   });
 
-  group('from JSON & to JSON', () {
+  group(TestConstants.collectFromJSON, () {
     test('collect json data', () async {
       List<Results> data = [];
       final Map<String, dynamic> jsonMap = json.decode(fixture('results.json'));
@@ -26,7 +27,8 @@ void main() {
       final result = data;
       expect(result, tResults);
     });
-    test('collect To json data', () async {
+
+    test(TestConstants.collectToJSON, () async {
       List<Map<String, dynamic>> expectData = [];
       List<Map<String, dynamic>> resultData = [];
       final Map<String, dynamic> jsonMap = json.decode(fixture('results.json'));

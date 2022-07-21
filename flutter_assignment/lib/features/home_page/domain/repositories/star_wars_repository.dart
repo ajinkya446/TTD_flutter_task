@@ -8,9 +8,3 @@ abstract class StarWarsRepository {
 
   Future<List<String>> getAllCharacters(int remoteId);
 }
-
-class Demo {
-  Future<String> getDetails(String data) async {
-    return data;
-  }
-}

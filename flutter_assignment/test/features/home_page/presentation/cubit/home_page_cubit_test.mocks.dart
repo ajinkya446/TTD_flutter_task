@@ -67,12 +67,3 @@ class MockMoviesLocalData extends _i1.Mock implements _i8.CollectDataFromLocal {
               returnValue: Future<List<String>>.value(<String>[]))
           as _i5.Future<List<String>>);
 }
-
-/// A class which mocks [MovieListParams].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockParams extends _i1.Mock implements _i4.MovieListParams {
-  @override
-  String get url =>
-      (super.noSuchMethod(Invocation.getter(#url), returnValue: '') as String);
-}

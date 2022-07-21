@@ -19,8 +19,8 @@ void main() {
     starWarsRepositoryImpl = CharacterRepositoryImpl(remoteDatasource: mockRemoteDataSource);
   });
 
-  group('Check All repository characters Implementation', () {
-    test('Collect characters from api', () async {
+  group(TestConstants.testAllRepository, () {
+    test(TestConstants.collectCharactersTest, () async {
       when(mockRemoteDataSource.fetchCharacters(TestConstants.characterList, 1)).thenAnswer((_) async => Right(TestConstants.characterModelList));
       final result = await starWarsRepositoryImpl.getAllCharacters(TestConstants.characterList, 1);
       expect(result, equals(Right(TestConstants.characterModelList)));

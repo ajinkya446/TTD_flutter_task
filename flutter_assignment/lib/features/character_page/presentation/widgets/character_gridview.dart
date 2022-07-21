@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../commons/widgets/size.dart';
 import '../../../../commons/widgets/widget.dart';
-import '../../../character_info_page/presentation/pages/character_info_screen.dart';
+import '../../../character_info_page/character_info_screen.dart';
 import '../../data/models/character_model.dart';
 
 class CharacterGridView extends StatelessWidget {

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_assignment/constants/constants.dart';
 import 'package:flutter_assignment/features/character_page/data/models/character_model.dart';
 
-import '../../../../commons/widgets/size.dart';
-import '../../../../commons/widgets/widget.dart';
+import '../../commons/widgets/size.dart';
+import '../../commons/widgets/widget.dart';
 
 class CharacterInfo extends StatefulWidget {
   final CharacterModels info;

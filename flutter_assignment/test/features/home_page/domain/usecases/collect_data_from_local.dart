@@ -16,7 +16,7 @@ void main() {
     when(mockCollectMovieFromLocal.call(params)).thenAnswer((_) async => TestConstants.characterList);
   });
 
-  test('Collection of movies from Local', () async {
+  test(TestConstants.collectMoviesLocalTest, () async {
     final result = await mockCollectMovieFromLocal.call(params);
     expect(result, equals(TestConstants.characterList));
     verify(mockCollectMovieFromLocal.call(params));

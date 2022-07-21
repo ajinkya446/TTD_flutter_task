@@ -16,7 +16,7 @@ void main() {
     mockCharacterList = MockCharacterList();
   });
 
-  test('Collection of characters details', () async {
+  test(TestConstants.collectionCharacterDetailsTest, () async {
     when(mockCharacterList.call(params)).thenAnswer((_) async => Right(TestConstants.characterModelList));
     final result = await mockCharacterList.call(params);
     expect(result, equals(Right(TestConstants.characterModelList)));

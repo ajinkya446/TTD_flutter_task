@@ -14,7 +14,7 @@ class MovieListCubit extends Cubit<MovieListState> {
   MovieListCubit(this.getMovies, this.getLocalData) : super(const MovieListState.Empty());
 
   Future getAPIResponse() async {
-    final result = await getMovies.call(MovieListParams(url: Constants.url));
+    final result = await getMovies(MovieListParams(url: Constants.url));
     result.fold((_) => emit(const MovieListState.Error()), (result) {
       if (result == null) {
         emit(const MovieListState.Empty());
