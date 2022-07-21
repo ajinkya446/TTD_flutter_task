@@ -1,7 +1,6 @@
 import 'package:flutter_assignment/features/character_page/domain/repository/character_repository.dart';
 import 'package:flutter_assignment/features/character_page/domain/usecases/charactaer_list.dart';
 import 'package:flutter_assignment/features/character_page/presentation/cubit/character_list_cubit.dart';
-import 'package:flutter_assignment/features/home_page/data/datasource/movies_remote_datasource.dart';
 import 'package:flutter_assignment/features/home_page/data/repositories/star_war_repository_impl.dart';
 import 'package:flutter_assignment/features/home_page/domain/repositories/star_wars_repository.dart';
 import 'package:flutter_assignment/features/home_page/domain/usecases/collectDataFromAPI.dart';
@@ -13,6 +12,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'features/character_page/data/datasource/character_remote_datasource.dart';
 import 'features/character_page/data/repositories/character_repository_impl.dart';
 import 'features/home_page/data/datasource/local_data_source.dart';
+import 'features/home_page/data/datasource/movies_remote_datasource.dart';
 import 'features/home_page/domain/usecases/collectDataFromLocal.dart';
 
 final serviceLocator = GetIt.instance;

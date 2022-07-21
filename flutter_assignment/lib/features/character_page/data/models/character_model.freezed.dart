@@ -457,37 +457,37 @@ abstract class _CharacterModels implements CharacterModels {
       _$_CharacterModels.fromJson;
 
   @override
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
-  String get height;
+  String get height => throw _privateConstructorUsedError;
   @override
-  String get mass;
+  String get mass => throw _privateConstructorUsedError;
   @override
-  String get hair_color;
+  String get hair_color => throw _privateConstructorUsedError;
   @override
-  String get skin_color;
+  String get skin_color => throw _privateConstructorUsedError;
   @override
-  String get eye_color;
+  String get eye_color => throw _privateConstructorUsedError;
   @override
-  String get birth_year;
+  String get birth_year => throw _privateConstructorUsedError;
   @override
-  String get gender;
+  String get gender => throw _privateConstructorUsedError;
   @override
-  String get homeworld;
+  String get homeworld => throw _privateConstructorUsedError;
   @override
-  List<String> get films;
+  List<String> get films => throw _privateConstructorUsedError;
   @override
-  List<dynamic> get species;
+  List<dynamic> get species => throw _privateConstructorUsedError;
   @override
-  List<String> get vehicles;
+  List<String> get vehicles => throw _privateConstructorUsedError;
   @override
-  List<String> get starships;
+  List<String> get starships => throw _privateConstructorUsedError;
   @override
-  String get created;
+  String get created => throw _privateConstructorUsedError;
   @override
-  String get edited;
+  String get edited => throw _privateConstructorUsedError;
   @override
-  String get url;
+  String get url => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_CharacterModelsCopyWith<_$_CharacterModels> get copyWith =>

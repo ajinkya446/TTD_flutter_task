@@ -671,7 +671,7 @@ abstract class _MovieListStateListReceived implements MovieListState {
   factory _MovieListStateListReceived.fromJson(Map<String, dynamic> json) =
       _$_MovieListStateListReceived.fromJson;
 
-  StarWarMoviesModel get response;
+  StarWarMoviesModel get response => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$_MovieListStateListReceivedCopyWith<_$_MovieListStateListReceived>
       get copyWith => throw _privateConstructorUsedError;

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_assignment/core/error/exceptions.dart';
 import 'package:flutter_assignment/features/character_page/data/models/character_model.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -59,7 +60,6 @@ class DatabaseHelper {
         DateTime dateTime = DateTime.parse(dateTimeNew);
         Duration dur = DateTime.now().difference(dateTime);
         String diffInMonth = (dur.inDays / 30).floor().toString();
-        print(diffInMonth);
         if (int.parse(diffInMonth) == 1) {
           try {
             await _database!.delete(Constants.tableNameMovies);
@@ -69,7 +69,7 @@ class DatabaseHelper {
             final value = await _database!.query(Constants.tableNameMovies);
             return value;
           } catch (error) {
-            throw Exception('DbBase.cleanDatabase: ' + error.toString());
+            throw ServerExceptions(Constants.serverFailureMessage);
           }
         } else {
           final value = await _database!.query(Constants.tableNameMovies);

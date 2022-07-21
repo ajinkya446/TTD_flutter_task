@@ -675,7 +675,7 @@ abstract class _CharacterListStateListReceived implements CharacterListState {
   factory _CharacterListStateListReceived.fromJson(Map<String, dynamic> json) =
       _$_CharacterListStateListReceived.fromJson;
 
-  List<CharacterModels> get response;
+  List<CharacterModels> get response => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$_CharacterListStateListReceivedCopyWith<_$_CharacterListStateListReceived>
       get copyWith => throw _privateConstructorUsedError;

@@ -22,7 +22,7 @@ class StarWarsRepositoryImpl implements StarWarsRepository {
       final response = await remoteDatasource.collectMoviesListFromAPI(Constants.url);
       return response;
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(Constants.serverFailureMessage));
     }
   }
 
